@@ -4,10 +4,20 @@ defmodule OnePasswordConnect.MixProject do
   def project do
     [
       app: :one_password_connect,
-      version: "0.1.0",
+      version: "0.0.1",
       elixir: "~> 1.13",
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      description:
+        "Client library that reads secrets and other configuration from 1Password Connect Servers",
+      source_url: "https://github.com/omt-tech/one_password_connect",
+      package: [
+        name: "one_password_connect",
+        licenses: ["MIT"],
+        links: %{
+          Github: "https://github.com/omt-tech/one_password_connect"
+        }
+      ]
     ]
   end
 
@@ -21,7 +31,8 @@ defmodule OnePasswordConnect.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:jason, "~> 1.4"}
+      {:jason, "~> 1.4"},
+      {:ex_doc, ">= 0.0.0", only: :dev, runtime: false}
     ]
   end
 end
