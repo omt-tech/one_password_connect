@@ -4,7 +4,7 @@ defmodule OnePasswordConnect.MixProject do
   def project do
     [
       app: :one_password_connect,
-      version: "0.0.1",
+      version: "0.0.4",
       elixir: "~> 1.13",
       start_permanent: Mix.env() == :prod,
       deps: deps(),

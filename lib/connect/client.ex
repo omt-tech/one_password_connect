@@ -28,8 +28,13 @@ defmodule OnePassword.Connect.Client do
     :httpc.request(:get, {url, headers(config)}, ssl_request_opts(config), [])
     |> unpack_get()
     # |> IO.inspect(label: "Vault fetch")
-    |> List.first()
-    |> Vault.from_raw()
+    |> then(fn
+      [vault | _] ->
+        Vault.from_raw(vault)
+
+      [] ->
+        throw("Vault #{name} not found")
+    end)
   end
 
   defp fetch_items(config, %Vault{id: vault_id} = vault, item_filter) do
@@ -86,5 +91,11 @@ defmodule OnePassword.Connect.Client do
 
   def unpack_get({:ok, {{'HTTP/1.1', 200, 'OK'}, _headers, json_payload}}) do
     Jason.decode!(json_payload)
+  end
+
+  def unpack_get(res) do
+    require Logger
+    Logger.error("Unknown result: #{inspect(res, pretty: true)}")
+    throw("Unknown error when fetching")
   end
 end
